@@ -42,7 +42,7 @@ class SvgPainter:
             if op == "rotate":
                 a = float(params[0])
                 [x, y, zz] = self.apply_matrix(self.matrix(math.cos(a), math.sin(a), -math.sin(a), math.cos(a), 0, 0), [x, y, 1.0])
-            
+
             # print (op, params, x, y)
 
         return (x, y)
@@ -61,7 +61,7 @@ class SvgPainter:
         y = (y - self.svgviewbox[1]) * (self.svgsize[1] / self.svgviewbox[3])
 
         return (x, y)
-    
+
     def get_opacity(self):
         opacity = 1.0
         for (tag, attrib) in reversed(self.tagstack):
@@ -85,7 +85,7 @@ class SvgPainter:
         return [[a, c, e], [b, d, f], [0.0, 0.0, 1.0]]
 
     def apply_matrix(self, matrix, old):
-        return [matrix[0][0] * old[0]+ matrix[0][1] * old[1] + matrix[0][2], 
+        return [matrix[0][0] * old[0]+ matrix[0][1] * old[1] + matrix[0][2],
             matrix[1][0] * old[0]+ matrix[1][1] * old[1] + matrix[1][2],
             1.0]
 
@@ -122,7 +122,7 @@ class SvgPainter:
 
         if "style" in attrib:
             apply_style_to_attrib(attrib["style"], attrib)
-        
+
 
     def parse_font_size(self, fontSize):
         return self.parse_size(fontSize)
@@ -254,7 +254,7 @@ class SvgPainter:
             else:
                 last.append(c)
             return result
-        
+
         return list(filter(None, map(lambda x: "".join(x), reduce(func, data, [[]]))))
 
     def flush_line(self, pointList: List[float], width: int, stroke: Union[int, Tuple[int, int, int]], fill: Union[int, Tuple[int, int, int]]):
@@ -400,7 +400,7 @@ class SvgPainter:
 
         if self.draw:
             self.apply_style(tag, attrib)
-        
+
         if not self.draw and not tag == "svg":
             return
 
@@ -414,7 +414,7 @@ class SvgPainter:
 
         if tag == "style":
             self.parse_style_tag()
-        
+
         elif tag == "rect":
             #print self.tagStack[-1][1]
             (x1, y1) = self.get_coords(attrib["x"], attrib["y"])
@@ -542,7 +542,7 @@ def draw_svg_file(file: str, imagedraw: ImageDraw.ImageDraw, imagesize: Tuple[in
 
 def _accept(prefix):
     prefixStr = prefix.decode("utf-8")
-    return "<?xml" in prefixStr or "<svg " in prefixStr or "<!DOC" in prefixStr
+    return "<?xml" in prefixStr or "<svg" in prefixStr or "<!DOC" in prefixStr
 
 
 class SvgImageFile(ImageFile.ImageFile):
